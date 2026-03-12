@@ -8,6 +8,9 @@ __MACOSX/
 
 # Gradle
 .gradle/
+/gradle/
+gradlew
+gradlew.bat
 
 # Kotlin
 .kotlin/
