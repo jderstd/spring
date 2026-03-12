@@ -1,0 +1,16 @@
+# Caches
+__MACOSX/
+.DS_Store
+
+# IDE
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+
+# Kotlin
+.kotlin/
+
+# Builds
+build/

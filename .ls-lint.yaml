@@ -1,0 +1,21 @@
+ls:
+    .dir: snake_case
+    .js: PascalCase
+    .ts: PascalCase
+
+ignore:
+    - .git
+    - .github
+    - .vscode
+    - __MACOSX
+    - "**/__MACOSX"
+    - .DS_Store
+    - "**/.DS_Store"
+    - .idea
+    - "**/.idea"
+    - .gradle
+    - "**/.gradle"
+    - .kotlin
+    - "**/.kotlin"
+    - build
+    - "**/build"
