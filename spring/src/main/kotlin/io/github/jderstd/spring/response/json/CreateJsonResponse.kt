@@ -11,16 +11,19 @@ public class CreateJsonResponse {
         /**
          * Create a success JSON response without any data.
          */
+        @JvmStatic
         public fun dataless(): CreateSuccessJsonResponseFunctions<Unit> = CreateSuccessJsonResponseFunctions()
 
         /**
          * Create a success JSON response.
          */
+        @JvmStatic
         public fun <T : Any> success(): CreateSuccessJsonResponseFunctions<T> = CreateSuccessJsonResponseFunctions()
 
         /**
          * Create a failure JSON response.
          */
+        @JvmStatic
         public fun <T : Any> failure(): CreateFailureJsonResponseFunctions<T> = CreateFailureJsonResponseFunctions()
     }
 }
