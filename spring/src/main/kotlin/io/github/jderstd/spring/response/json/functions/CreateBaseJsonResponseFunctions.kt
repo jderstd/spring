@@ -17,10 +17,7 @@ public open class CreateBaseJsonResponseFunctions<T : Any> : CreateBaseResponse(
      * Finish the response creation.
      */
     public fun create(): ResponseEntity<JsonResponse<T>> {
-        this.addHeader(
-            "Content-Type",
-            "application/json",
-        )
+        this.headers.set("Content-Type", "application/json")
 
         return ResponseEntity
             .status(this.status)
