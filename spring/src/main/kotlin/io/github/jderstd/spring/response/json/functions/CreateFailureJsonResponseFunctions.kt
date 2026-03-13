@@ -6,6 +6,10 @@ import io.github.jderstd.spring.response.json.JsonResponseError
  * Create a failure JSON response.
  */
 public open class CreateFailureJsonResponseFunctions<T : Any> : CreateBaseJsonResponseFunctions<T>() {
+    init {
+        this.json.success = false
+    }
+
     /**
      * Add an error to the response.
      */
