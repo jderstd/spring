@@ -91,6 +91,12 @@ Build:
 just build
 ```
 
+Test:
+
+```sh
+just test
+```
+
 ## What NOT to Do
 
 - Do not migrate tooling.
