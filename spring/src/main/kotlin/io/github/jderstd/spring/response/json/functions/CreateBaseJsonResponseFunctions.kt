@@ -4,9 +4,18 @@ import io.github.jderstd.spring.response.base.CreateBaseResponse
 import io.github.jderstd.spring.response.json.JsonResponse
 import org.springframework.http.ResponseEntity
 
+/**
+ * Create a base JSON response.
+ */
 public open class CreateBaseJsonResponseFunctions<T : Any> : CreateBaseResponse() {
+    /**
+     * JSON body.
+     */
     public var json: JsonResponse<T> = JsonResponse()
 
+    /**
+     * Finish the response creation.
+     */
     public fun create(): ResponseEntity<JsonResponse<T>> {
         this.addHeader(
             "Content-Type",
