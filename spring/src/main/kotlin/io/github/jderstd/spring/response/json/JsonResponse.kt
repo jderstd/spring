@@ -22,7 +22,7 @@ public open class JsonResponse<T : Any> {
     /**
      * Get the first error for the response when `success` is `false`.
      */
-    public fun error(): JsonResponseError = this.errors[0]
+    public fun error(): JsonResponseError? = this.errors.firstOrNull()
 
     /**
      * Add an error to the response.
