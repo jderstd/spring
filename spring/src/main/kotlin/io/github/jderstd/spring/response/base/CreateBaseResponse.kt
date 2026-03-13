@@ -5,7 +5,7 @@ import org.springframework.http.HttpHeaders
 /**
  * Create a base response.
  */
-public open class CreateBaseResponse {
+public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions<Self>> {
     /**
      * Response status code.
      */
@@ -16,14 +16,34 @@ public open class CreateBaseResponse {
      */
     public var headers: HttpHeaders = HttpHeaders()
 
+    @Suppress("UNCHECKED_CAST")
+    protected fun self(): Self = this as Self
+
+    /**
+     * Set response status code.
+     */
+    public fun status(status: Int): Self {
+        this.status = status
+        return self()
+    }
+
+    /**
+     * Set response headers.
+     */
+    public fun headers(httpHeaders: HttpHeaders): Self {
+        this.headers = httpHeaders
+        return self()
+    }
+
     /**
      * Add response header.
      */
     public fun addHeader(
         key: String,
         value: String,
-    ) {
+    ): Self {
         this.headers.add(key, value)
+        return self()
     }
 
     /**
@@ -32,8 +52,9 @@ public open class CreateBaseResponse {
     public fun addHeader(
         key: String,
         values: Iterable<String>,
-    ) {
+    ): Self {
         this.headers.addAll(key, values.toList())
+        return self()
     }
 
     /**
@@ -42,7 +63,7 @@ public open class CreateBaseResponse {
      * @param keyValues a map of header names and values.
      * Ech value must be either a [String] or an [Iterable] of [String].
      */
-    public fun addHeaders(keyValues: Map<String, Any>) {
+    public fun addHeaders(keyValues: Map<String, Any>): Self {
         for ((key, value) in keyValues) {
             when (value) {
                 is String -> {
@@ -75,5 +96,12 @@ public open class CreateBaseResponse {
                 }
             }
         }
+
+        return self()
     }
 }
+
+/**
+ * Create a base response.
+ */
+public open class CreateBaseResponse : CreateBaseResponseFunctions<CreateBaseResponse>()

@@ -24,6 +24,6 @@ public class CreateJsonResponse {
          * Create a failure JSON response.
          */
         @JvmStatic
-        public fun <T : Any> failure(): CreateFailureJsonResponseFunctions<T> = CreateFailureJsonResponseFunctions()
+        public fun failure(): CreateFailureJsonResponseFunctions = CreateFailureJsonResponseFunctions()
     }
 }

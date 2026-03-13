@@ -3,7 +3,7 @@ package io.github.jderstd.spring.response.json
 /**
  * JSON response.
  */
-public open class JsonResponse<T : Any> {
+public open class JsonResponse<Data : Any> {
     /**
      * Indicates whether the response is successful or not.
      */
@@ -12,12 +12,36 @@ public open class JsonResponse<T : Any> {
     /**
      * Requested information for the response when `success` is `true`.
      */
-    public var data: T? = null
+    public var data: Data? = null
 
     /**
      * A list of errors for the response when `success` is `false`.
      */
     public var errors: MutableList<JsonResponseError> = mutableListOf<JsonResponseError>()
+
+    /**
+     * Set whether the response is successful or not.
+     */
+    public fun success(success: Boolean): JsonResponse<Data> {
+        this.success = success
+        return this
+    }
+
+    /**
+     * Set requested information for the response.
+     */
+    public fun data(data: Data?): JsonResponse<Data> {
+        this.data = data
+        return this
+    }
+
+    /**
+     * Set errors for the response.
+     */
+    public fun errors(errors: MutableList<JsonResponseError>): JsonResponse<Data> {
+        this.errors = errors
+        return this
+    }
 
     /**
      * Get the first error for the response when `success` is `false`.
@@ -27,14 +51,16 @@ public open class JsonResponse<T : Any> {
     /**
      * Add an error to the response.
      */
-    public fun addError(error: JsonResponseError) {
+    public fun addError(error: JsonResponseError): JsonResponse<Data> {
         this.errors.add(error)
+        return this
     }
 
     /**
      * Add a list of errors to the response.
      */
-    public fun addErrors(errors: Iterable<JsonResponseError>) {
+    public fun addErrors(errors: Iterable<JsonResponseError>): JsonResponse<Data> {
         this.errors.addAll(errors)
+        return this
     }
 }
