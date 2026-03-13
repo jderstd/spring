@@ -22,6 +22,7 @@ typos:
 lint:
     just lslint
     just typos
+    ktlint --format
 
 # Build packages
 build:
