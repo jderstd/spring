@@ -5,6 +5,7 @@ set windows-shell := ["pwsh", "-Command"]
 _:
     just check
     just build
+    just test
 
 # List commands
 list:
@@ -27,6 +28,10 @@ check:
 # Build packages
 build:
     gradle build
+
+# Run tests
+test:
+    gradle test
 
 # Clean
 clean:
