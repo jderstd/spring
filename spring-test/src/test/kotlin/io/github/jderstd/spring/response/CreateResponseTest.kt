@@ -15,7 +15,7 @@ class CreateResponseTest {
 
         assertEquals(200, response.statusCode.value())
         assertNull(response.body)
-        assertTrue(response.headers.isEmpty())
+        assertTrue(response.headers.isEmpty)
     }
 
     @Test
@@ -85,7 +85,7 @@ class CreateResponseTest {
 
         assertNotNull(exception.message)
         assertTrue(exception.message!!.contains("X-Mixed"))
-        assertTrue(responseBuilder.headers.isEmpty())
+        assertTrue(responseBuilder.headers.isEmpty)
     }
 
     @Test
@@ -101,6 +101,6 @@ class CreateResponseTest {
 
         assertNotNull(exception.message)
         assertTrue(exception.message!!.contains("X-Nullable"))
-        assertTrue(responseBuilder.headers.isEmpty())
+        assertTrue(responseBuilder.headers.isEmpty)
     }
 }

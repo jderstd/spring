@@ -3,7 +3,6 @@ package io.github.jderstd.spring.response;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SuppressWarnings("RedundantTypeArguments")
 class CreateResponseJavaTest {
     @Test
     void createReturnsDefaultResponseWhenNotConfigured() {
@@ -107,10 +107,5 @@ class CreateResponseJavaTest {
         assertNotNull(exception.getMessage());
         assertTrue(exception.getMessage().contains("X-Nullable"));
         assertTrue(responseBuilder.getHeaders().isEmpty());
-    }
-
-    private <T> T configure(T value, Consumer<T> configure) {
-        configure.accept(value);
-        return value;
     }
 }

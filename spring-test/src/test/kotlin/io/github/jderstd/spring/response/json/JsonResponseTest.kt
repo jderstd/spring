@@ -1,3 +1,5 @@
+@file:Suppress("RedundantExplicitType")
+
 package io.github.jderstd.spring.response.json
 
 import kotlin.test.Test

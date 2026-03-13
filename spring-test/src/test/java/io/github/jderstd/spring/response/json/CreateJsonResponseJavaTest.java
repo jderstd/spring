@@ -3,8 +3,6 @@ package io.github.jderstd.spring.response.json;
 import java.util.List;
 import java.util.function.Consumer;
 
-import kotlin.Unit;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -17,8 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CreateJsonResponseJavaTest {
     @Test
     void datalessCreatesASuccessfulJsonResponseWithDefaults() {
-        ResponseEntity<JsonResponse<Unit>> response = CreateJsonResponse.dataless().create();
-        JsonResponse<Unit> body = response.getBody();
+        ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse.dataless().create();
+
+        JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
         assertEquals(200, response.getStatusCode().value());
@@ -31,6 +30,7 @@ class CreateJsonResponseJavaTest {
     @Test
     void successCreatesASuccessfulJsonResponseWithDefaults() {
         ResponseEntity<JsonResponse<String>> response = CreateJsonResponse.<String>success().create();
+
         JsonResponse<String> body = response.getBody();
 
         assertNotNull(body);
@@ -43,13 +43,11 @@ class CreateJsonResponseJavaTest {
 
     @Test
     void successCreatesAJsonResponseWithPayload() {
-        ResponseEntity<JsonResponse<String>> response = configure(
-            CreateJsonResponse.<String>success(),
-            responseBuilder -> {
-                responseBuilder.setStatus(202);
-                responseBuilder.getJson().setData("done");
-            }
-        ).create();
+        ResponseEntity<JsonResponse<String>> response = CreateJsonResponse.<String>success()
+                .status(202)
+                .json(new JsonResponse<String>().data("done"))
+                .create();
+
         JsonResponse<String> body = response.getBody();
 
         assertNotNull(body);
@@ -63,14 +61,12 @@ class CreateJsonResponseJavaTest {
     @Test
     void failureCreatesAnUnsuccessfulJsonResponseWithErrors() {
         JsonResponseError error = createError("bad_request", List.of("email"), "Email is invalid.");
-        ResponseEntity<JsonResponse<Unit>> response = configure(
-            CreateJsonResponse.<String>failure(),
-            responseBuilder -> {
-                responseBuilder.setStatus(400);
-                responseBuilder.addError(error);
-            }
-        ).create();
-        JsonResponse<Unit> body = response.getBody();
+
+        ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse.failure()
+                .addError(error)
+                .create();
+
+        JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
         JsonResponseError firstError = body.error();
@@ -79,6 +75,7 @@ class CreateJsonResponseJavaTest {
         assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
         assertFalse(body.getSuccess());
         assertNull(body.getData());
+        assertNotNull(firstError);
         assertEquals("bad_request", firstError.getCode());
         assertEquals(List.of("email"), firstError.getPath());
         assertEquals("Email is invalid.", firstError.getMessage());
@@ -86,8 +83,9 @@ class CreateJsonResponseJavaTest {
 
     @Test
     void failureWithoutErrorsStaysUnsuccessfulAndErrorAccessReturnsNull() {
-        ResponseEntity<JsonResponse<Unit>> response = CreateJsonResponse.<String>failure().create();
-        JsonResponse<Unit> body = response.getBody();
+        ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse.failure().create();
+
+        JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
         assertFalse(body.getSuccess());
@@ -98,13 +96,15 @@ class CreateJsonResponseJavaTest {
     @Test
     void failureAddErrorsKeepsErrorOrder() {
         JsonResponseError emailError = createError("bad_request", List.of("email"), "Email is invalid.");
+
         JsonResponseError nameError = createError("missing_name", List.of("name"), "Name is required.");
 
-        ResponseEntity<JsonResponse<Unit>> response = configure(
-            CreateJsonResponse.<String>failure(),
-            responseBuilder -> responseBuilder.addErrors(List.of(emailError, nameError))
-        ).create();
-        JsonResponse<Unit> body = response.getBody();
+        ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse
+                .failure()
+                .addErrors(List.of(emailError, nameError))
+                .create();
+
+        JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
         assertEquals(List.of(emailError, nameError), body.getErrors());
@@ -117,10 +117,12 @@ class CreateJsonResponseJavaTest {
             .code("bad_request")
             .path(List.of("email"))
             .message("Email is invalid.");
-        ResponseEntity<JsonResponse<Unit>> response = CreateJsonResponse.failure()
+
+        ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse.failure()
             .addError(error)
             .create();
-        JsonResponse<Unit> body = response.getBody();
+
+        JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
         assertEquals(400, response.getStatusCode().value());
@@ -130,28 +132,21 @@ class CreateJsonResponseJavaTest {
 
     @Test
     void jsonCreateEnforcesASingleApplicationJsonContentType() {
-        ResponseEntity<JsonResponse<String>> response = tap(
-            configure(
-                CreateJsonResponse.Companion.<String>success(),
-                responseBuilder -> responseBuilder.addHeader("Content-Type", "text/plain")
-            ),
-            responseBuilder -> {
-                responseBuilder.create();
-            }
-        ).create();
+        ResponseEntity<JsonResponse<String>> response = CreateJsonResponse
+                .<String>success()
+                .addHeader("Content-Type", "text/plain")
+                .create();
 
         assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
     }
 
     @Test
     void jsonCreatePreservesCustomHeaders() {
-        ResponseEntity<JsonResponse<String>> response = configure(
-            CreateJsonResponse.Companion.<String>success(),
-            responseBuilder -> {
-                responseBuilder.addHeader("X-Request-Id", "req-123");
-                responseBuilder.addHeader("Content-Type", "text/plain");
-            }
-        ).create();
+        ResponseEntity<JsonResponse<String>> response = CreateJsonResponse
+                .<String>success()
+                .addHeader("X-Request-Id", "req-123")
+                .addHeader("Content-Type", "text/plain")
+                .create();
 
         assertEquals(List.of("req-123"), response.getHeaders().get("X-Request-Id"));
         assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));

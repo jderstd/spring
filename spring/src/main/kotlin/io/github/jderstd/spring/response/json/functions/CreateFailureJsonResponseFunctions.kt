@@ -5,7 +5,8 @@ import io.github.jderstd.spring.response.json.JsonResponseError
 /**
  * Create a failure JSON response.
  */
-public open class CreateFailureJsonResponseFunctions : CreateBaseJsonResponseFunctions<Unit, CreateFailureJsonResponseFunctions>() {
+public open class CreateFailureJsonResponseFunctions<Data : Any> :
+    CreateBaseJsonResponseFunctions<Data, CreateFailureJsonResponseFunctions<Data>>() {
     init {
         this.status = 400
         this.json.success = false
@@ -14,7 +15,7 @@ public open class CreateFailureJsonResponseFunctions : CreateBaseJsonResponseFun
     /**
      * Add an error to the response.
      */
-    public fun addError(error: JsonResponseError): CreateFailureJsonResponseFunctions {
+    public fun addError(error: JsonResponseError): CreateFailureJsonResponseFunctions<Data> {
         this.json.errors.add(error)
         return self()
     }
@@ -22,7 +23,7 @@ public open class CreateFailureJsonResponseFunctions : CreateBaseJsonResponseFun
     /**
      * Add a list of errors to the response.
      */
-    public fun addErrors(errors: Iterable<JsonResponseError>): CreateFailureJsonResponseFunctions {
+    public fun addErrors(errors: Iterable<JsonResponseError>): CreateFailureJsonResponseFunctions<Data> {
         this.json.errors.addAll(errors)
         return self()
     }
