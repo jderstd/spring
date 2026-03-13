@@ -3,7 +3,7 @@ set windows-shell := ["pwsh", "-Command"]
 
 # Default action
 _:
-    just lint
+    just check
     just build
 
 # List commands
@@ -18,8 +18,8 @@ lslint:
 typos:
     typos
 
-# Lint code
-lint:
+# Check code
+check:
     just lslint
     just typos
     ktlint --format
