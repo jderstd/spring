@@ -5,9 +5,10 @@ plugins {
     kotlin("jvm")
 }
 
-val springFrameworkVersion: String = providers
-    .gradleProperty("springVersion")
-    .get()
+val springFrameworkVersion: String =
+    providers
+        .gradleProperty("springVersion")
+        .get()
 
 dependencies {
     // main

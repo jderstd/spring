@@ -1,5 +1,5 @@
-import org.gradle.api.tasks.testing.Test
 import org.gradle.api.JavaVersion
+import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
@@ -12,19 +12,28 @@ data class JavaToolchain(
     val jvmTarget: JvmTarget,
 )
 
-fun resolveJavaToolchain(version: Int): JavaToolchain = when (version) {
-    17 -> JavaToolchain(
-        17,
-        JavaVersion.VERSION_17,
-        JvmTarget.JVM_17,
-    )
-    21 -> JavaToolchain(
-        21,
-        JavaVersion.VERSION_21,
-        JvmTarget.JVM_21,
-    )
-    else -> error("Unsupported Java toolchain version: $version")
-}
+fun resolveJavaToolchain(version: Int): JavaToolchain =
+    when (version) {
+        17 -> {
+            JavaToolchain(
+                17,
+                JavaVersion.VERSION_17,
+                JvmTarget.JVM_17,
+            )
+        }
+
+        21 -> {
+            JavaToolchain(
+                21,
+                JavaVersion.VERSION_21,
+                JvmTarget.JVM_21,
+            )
+        }
+
+        else -> {
+            error("Unsupported Java toolchain version: $version")
+        }
+    }
 
 val javaToolchain: JavaToolchain = resolveJavaToolchain(17)
 val kotlinVersion: KotlinVersion = KotlinVersion.KOTLIN_2_3
