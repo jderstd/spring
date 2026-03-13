@@ -50,7 +50,22 @@ public open class CreateBaseResponse {
                 }
 
                 is Iterable<*> -> {
-                    this.headers.addAll(key, value.filterIsInstance<String>())
+                    val headerValues: MutableList<String> = mutableListOf<String>()
+
+                    for (headerValue: Any? in value) {
+                        if (headerValue !is String) {
+                            throw IllegalArgumentException(
+                                "Header '$key' must be a String or Iterable<String>, but contained ${headerValue?.let {
+                                    it::class
+                                        .qualifiedName
+                                } ?: "null"}",
+                            )
+                        }
+
+                        headerValues.add(headerValue)
+                    }
+
+                    this.headers.addAll(key, headerValues)
                 }
 
                 else -> {
