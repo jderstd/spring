@@ -27,11 +27,11 @@ check:
 
 # Build packages
 build:
-    gradle build
+    gradle :spring:build
 
 # Run tests
 test:
-    gradle test
+    gradle :spring-test:test
 
 # Clean
 clean:
