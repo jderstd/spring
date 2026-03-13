@@ -7,21 +7,25 @@ public open class JsonResponseError {
     /**
      * Code representing the error.
      */
+    @set:JvmSynthetic
     public var code: String = ResponseError.UNKNOWN.message()
 
     /**
      * Indicates where the error occurred.
      */
+    @set:JvmSynthetic
     public var path: List<String> = listOf<String>()
 
     /**
      * Detail of the error.
      */
+    @set:JvmSynthetic
     public var message: String? = null
 
     /**
      * Set code representing the error.
      */
+    @JvmName("setCode")
     public fun code(code: String): JsonResponseError {
         this.code = code
         return this
@@ -30,6 +34,7 @@ public open class JsonResponseError {
     /**
      * Set where the error occurred.
      */
+    @JvmName("setPath")
     public fun path(path: List<String>): JsonResponseError {
         this.path = path
         return this
@@ -38,6 +43,7 @@ public open class JsonResponseError {
     /**
      * Set detail of the error.
      */
+    @JvmName("setMessage")
     public fun message(message: String?): JsonResponseError {
         this.message = message
         return this

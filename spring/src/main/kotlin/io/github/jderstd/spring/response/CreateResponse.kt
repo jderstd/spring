@@ -10,11 +10,13 @@ public open class CreateResponse<Body : Any> : CreateBaseResponseFunctions<Creat
     /**
      * response body.
      */
+    @set:JvmSynthetic
     public var body: Body? = null
 
     /**
      * Set response body.
      */
+    @JvmName("setBody")
     public fun body(body: Body?): CreateResponse<Body> {
         this.body = body
         return self()

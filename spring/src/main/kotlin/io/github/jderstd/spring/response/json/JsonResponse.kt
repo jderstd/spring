@@ -7,21 +7,25 @@ public open class JsonResponse<Data : Any> {
     /**
      * Indicates whether the response is successful or not.
      */
+    @set:JvmSynthetic
     public var success: Boolean = true
 
     /**
      * Requested information for the response when `success` is `true`.
      */
+    @set:JvmSynthetic
     public var data: Data? = null
 
     /**
      * A list of errors for the response when `success` is `false`.
      */
+    @set:JvmSynthetic
     public var errors: MutableList<JsonResponseError> = mutableListOf<JsonResponseError>()
 
     /**
      * Set whether the response is successful or not.
      */
+    @JvmName("setSuccess")
     public fun success(success: Boolean): JsonResponse<Data> {
         this.success = success
         return this
@@ -30,6 +34,7 @@ public open class JsonResponse<Data : Any> {
     /**
      * Set requested information for the response.
      */
+    @JvmName("setData")
     public fun data(data: Data?): JsonResponse<Data> {
         this.data = data
         return this
@@ -38,6 +43,7 @@ public open class JsonResponse<Data : Any> {
     /**
      * Set errors for the response.
      */
+    @JvmName("setErrors")
     public fun errors(errors: MutableList<JsonResponseError>): JsonResponse<Data> {
         this.errors = errors
         return this

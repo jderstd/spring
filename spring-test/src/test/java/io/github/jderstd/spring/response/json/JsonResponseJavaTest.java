@@ -37,15 +37,15 @@ class JsonResponseJavaTest {
     @Test
     void jsonResponseFluentSettersCanBeChained() {
         JsonResponseError firstError = new JsonResponseError()
-            .code("bad_request")
-            .path(List.of("email"))
-            .message("Email is invalid.");
-        JsonResponseError secondError = new JsonResponseError().code("missing_name");
+            .setCode("bad_request")
+            .setPath(List.of("email"))
+            .setMessage("Email is invalid.");
+        JsonResponseError secondError = new JsonResponseError().setCode("missing_name");
 
         JsonResponse<String> response = new JsonResponse<String>()
-            .success(false)
-            .data("payload")
-            .errors(new ArrayList<>(List.of(firstError)))
+            .setSuccess(false)
+            .setData("payload")
+            .setErrors(new ArrayList<>(List.of(firstError)))
             .addError(secondError);
 
         assertFalse(response.getSuccess());

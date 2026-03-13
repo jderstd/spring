@@ -44,8 +44,8 @@ class CreateJsonResponseJavaTest {
     @Test
     void successCreatesAJsonResponseWithPayload() {
         ResponseEntity<JsonResponse<String>> response = CreateJsonResponse.<String>success()
-                .status(202)
-                .json(new JsonResponse<String>().data("done"))
+                .setStatus(202)
+                .setJson(new JsonResponse<String>().setData("done"))
                 .create();
 
         JsonResponse<String> body = response.getBody();
@@ -114,9 +114,9 @@ class CreateJsonResponseJavaTest {
     @Test
     void failureJsonSetterKeepsFluentChainingOnTheFailureBuilder() {
         JsonResponseError error = new JsonResponseError()
-            .code("bad_request")
-            .path(List.of("email"))
-            .message("Email is invalid.");
+            .setCode("bad_request")
+            .setPath(List.of("email"))
+            .setMessage("Email is invalid.");
 
         ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse.failure()
             .addError(error)

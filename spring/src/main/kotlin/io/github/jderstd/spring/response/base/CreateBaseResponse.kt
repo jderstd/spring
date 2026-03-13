@@ -9,11 +9,13 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
     /**
      * Response status code.
      */
+    @set:JvmSynthetic
     public var status: Int = 200
 
     /**
      * Response headers.
      */
+    @set:JvmSynthetic
     public var headers: HttpHeaders = HttpHeaders()
 
     @Suppress("UNCHECKED_CAST")
@@ -22,6 +24,7 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
     /**
      * Set response status code.
      */
+    @JvmName("setStatus")
     public fun status(status: Int): Self {
         this.status = status
         return self()
@@ -30,6 +33,7 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
     /**
      * Set response headers.
      */
+    @JvmName("setHeaders")
     public fun headers(httpHeaders: HttpHeaders): Self {
         this.headers = httpHeaders
         return self()

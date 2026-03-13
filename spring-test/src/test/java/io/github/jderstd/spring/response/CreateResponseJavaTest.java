@@ -27,8 +27,8 @@ class CreateResponseJavaTest {
     @Test
     void createReturnsTheConfiguredResponse() {
         ResponseEntity<String> response = new CreateResponse<String>()
-            .status(201)
-            .body("created")
+            .setStatus(201)
+            .setBody("created")
             .addHeader("X-Request-Id", "req-123")
             .addHeader("X-Trace", List.of("trace-1", "trace-2"))
             .create();
