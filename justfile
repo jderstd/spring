@@ -38,7 +38,7 @@ publish:
     gradle :spring:publishToMavenLocal
 
 # Publish packages as dry-run
-pusblish-try:
+publish-try:
     gradle :spring:publishToMavenLocal --dry-run
 
 # Clean

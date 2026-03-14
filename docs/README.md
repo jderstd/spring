@@ -16,7 +16,7 @@ For POM, add the dependency to `pom.xml`:
 </dependency>
 ```
 
-For Gradle, add the dependency to `build.gralde`/`build.gradle.kts`:
+For Gradle, add the dependency to `build.gradle`/`build.gradle.kts`:
 
 ```gradle
 dependencies {

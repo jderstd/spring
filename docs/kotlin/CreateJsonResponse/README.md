@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 import io.github.jderstd.spring.response.json.JsonResponse
 import io.github.jderstd.spring.response.json.CreateJsonResponse
 
-val response: ResponseEntity<JsonResponse<String>> = CreateJsonResponse
+val response: ResponseEntity<JsonResponse<Unit>> = CreateJsonResponse
     .dataless()
     .create()
 ```
@@ -31,7 +31,7 @@ import org.springframework.http.ResponseEntity
 import io.github.jderstd.spring.response.json.JsonResponse
 import io.github.jderstd.spring.response.json.CreateJsonResponse
 
-val response: ResponseEntity<JsonResponse<String>> = CreateJsonResponse
+val response: ResponseEntity<JsonResponse<Unit>> = CreateJsonResponse
     .success<String>()
     .data("Hello, World!")
     .create()

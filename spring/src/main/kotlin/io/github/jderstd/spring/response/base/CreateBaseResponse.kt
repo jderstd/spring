@@ -65,7 +65,7 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
      * Add response headers.
      *
      * @param keyValues a map of header names and values.
-     * Ech value must be either a [String] or an [Iterable] of [String].
+     * Each value must be either a [String] or an [Iterable] of [String].
      */
     public fun addHeaders(keyValues: Map<String, Any>): Self {
         for ((key, value) in keyValues) {

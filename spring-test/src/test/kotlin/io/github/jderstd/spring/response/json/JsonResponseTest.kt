@@ -66,7 +66,7 @@ class JsonResponseTest {
     fun `json response error defaults stay predictable`() {
         val error: JsonResponseError = JsonResponseError()
 
-        assertEquals(ResponseError.UNKNOWN.message(), error.code)
+        assertEquals(ResponseError.UNKNOWN.code(), error.code)
         assertTrue(error.path.isEmpty())
         assertNull(error.message)
     }

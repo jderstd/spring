@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import io.github.jderstd.spring.response.json.JsonResponse;
 import io.github.jderstd.spring.response.json.CreateJsonResponse;
 
-ResponseEntity<JsonResponse<String>> response = CreateJsonResponse
+ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse
     .dataless()
     .create();
 ```
@@ -31,7 +31,7 @@ import org.springframework.http.ResponseEntity;
 import io.github.jderstd.spring.response.json.JsonResponse;
 import io.github.jderstd.spring.response.json.CreateJsonResponse;
 
-ResponseEntity<JsonResponse<String>> response = CreateJsonResponse
+ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse
     .success()
     .setData("Hello, World!")
     .create();

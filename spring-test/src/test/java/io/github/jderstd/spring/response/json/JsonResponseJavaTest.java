@@ -63,7 +63,7 @@ class JsonResponseJavaTest {
     void jsonResponseErrorDefaultsStayPredictable() {
         JsonResponseError error = new JsonResponseError();
 
-        assertEquals(ResponseError.UNKNOWN.getMessage(), error.getCode());
+        assertEquals(ResponseError.UNKNOWN.getCode(), error.getCode());
         assertTrue(error.getPath().isEmpty());
         assertNull(error.getMessage());
     }

@@ -8,7 +8,7 @@ public open class JsonResponseError {
      * Code representing the error.
      */
     @set:JvmSynthetic
-    public var code: String = ResponseError.UNKNOWN.message()
+    public var code: String = ResponseError.UNKNOWN.code()
 
     /**
      * Indicates where the error occurred.
