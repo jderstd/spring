@@ -33,6 +33,14 @@ build:
 test:
     gradle :spring-test:test
 
+# Publish packages
+publish:
+    gradle :spring:publishToMavenLocal
+
+# Publish packages as dry-run
+pusblish-try:
+    gradle :spring:publishToMavenLocal --dry-run
+
 # Clean
 clean:
     gradle clean

@@ -1,8 +1,11 @@
+import org.gradle.api.publish.maven.MavenPublication
+
 version = "0.1.0"
 
 plugins {
     `java-library`
     kotlin("jvm")
+    `maven-publish`
 }
 
 val springFrameworkVersion: String =
@@ -11,13 +14,14 @@ val springFrameworkVersion: String =
         .get()
 
 dependencies {
-    // main
     compileOnly("org.springframework:spring-web:$springFrameworkVersion")
     compileOnly("org.springframework:spring-context:$springFrameworkVersion")
+}
 
-    // test
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.springframework:spring-web:$springFrameworkVersion")
-    testImplementation("org.springframework:spring-context:$springFrameworkVersion")
-    testImplementation("org.springframework:spring-test:$springFrameworkVersion")
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
 }
