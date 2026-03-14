@@ -1,7 +1,6 @@
 package io.github.jderstd.spring.response.json;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +68,7 @@ class CreateJsonResponseJavaTest {
         JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
+
         JsonResponseError firstError = body.error();
 
         assertEquals(400, response.getStatusCode().value());
@@ -158,15 +158,5 @@ class CreateJsonResponseJavaTest {
         error.setPath(path);
         error.setMessage(message);
         return error;
-    }
-
-    private <T> T configure(T value, Consumer<T> configure) {
-        configure.accept(value);
-        return value;
-    }
-
-    private <T> T tap(T value, Consumer<T> consumer) {
-        consumer.accept(value);
-        return value;
     }
 }

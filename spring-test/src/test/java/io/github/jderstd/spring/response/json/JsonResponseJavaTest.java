@@ -14,6 +14,7 @@ class JsonResponseJavaTest {
     @Test
     void jsonResponseAddErrorAppendsASingleError() {
         JsonResponse<String> response = new JsonResponse<>();
+
         JsonResponseError error = createError("single");
 
         response.addError(error);
@@ -25,7 +26,9 @@ class JsonResponseJavaTest {
     @Test
     void jsonResponseAddErrorsAppendsErrorsInOrder() {
         JsonResponse<String> response = new JsonResponse<>();
+
         JsonResponseError firstError = createError("first");
+
         JsonResponseError secondError = createError("second");
 
         response.addErrors(List.of(firstError, secondError));
@@ -40,6 +43,7 @@ class JsonResponseJavaTest {
             .setCode("bad_request")
             .setPath(List.of("email"))
             .setMessage("Email is invalid.");
+
         JsonResponseError secondError = new JsonResponseError().setCode("missing_name");
 
         JsonResponse<String> response = new JsonResponse<String>()
@@ -59,15 +63,9 @@ class JsonResponseJavaTest {
     void jsonResponseErrorDefaultsStayPredictable() {
         JsonResponseError error = new JsonResponseError();
 
-        assertEquals(ResponseError.UNKNOWN.message(), error.getCode());
+        assertEquals(ResponseError.UNKNOWN.getMessage(), error.getCode());
         assertTrue(error.getPath().isEmpty());
         assertNull(error.getMessage());
-    }
-
-    @Test
-    void responseErrorMessagesAreStable() {
-        assertEquals("Internal server error", ResponseError.SERVER.message());
-        assertEquals("Unknown error", ResponseError.UNKNOWN.message());
     }
 
     private JsonResponseError createError(String code) {

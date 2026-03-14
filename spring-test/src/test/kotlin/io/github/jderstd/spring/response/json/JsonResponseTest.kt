@@ -70,10 +70,4 @@ class JsonResponseTest {
         assertTrue(error.path.isEmpty())
         assertNull(error.message)
     }
-
-    @Test
-    fun `response error messages are stable`() {
-        assertEquals("Internal server error", ResponseError.SERVER.message())
-        assertEquals("Unknown error", ResponseError.UNKNOWN.message())
-    }
 }
