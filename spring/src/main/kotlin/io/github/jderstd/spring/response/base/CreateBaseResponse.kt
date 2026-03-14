@@ -68,10 +68,12 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
      * Each value must be either a [String] or an [Iterable] of [String].
      */
     public fun addHeaders(keyValues: Map<String, Any>): Self {
+        val result: HttpHeaders = HttpHeaders()
+
         for ((key, value) in keyValues) {
             when (value) {
                 is String -> {
-                    this.headers.add(key, value)
+                    result.add(key, value)
                 }
 
                 is Iterable<*> -> {
@@ -90,7 +92,7 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
                         headerValues.add(headerValue)
                     }
 
-                    this.headers.addAll(key, headerValues)
+                    result.addAll(key, headerValues)
                 }
 
                 else -> {
@@ -100,6 +102,8 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
                 }
             }
         }
+
+        this.headers.addAll(result)
 
         return self()
     }

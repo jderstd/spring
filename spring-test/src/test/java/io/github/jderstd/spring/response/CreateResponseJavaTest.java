@@ -108,4 +108,23 @@ class CreateResponseJavaTest {
         assertTrue(exception.getMessage().contains("X-Nullable"));
         assertTrue(responseBuilder.getHeaders().isEmpty());
     }
+
+    @Test
+    void addHeadersDoesNotKeepEarlierHeadersWhenALaterValueIsInvalid() {
+        CreateResponse<String> responseBuilder = new CreateResponse<>();
+
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> responseBuilder.addHeaders(
+                Map.<String, Object>ofEntries(
+                    Map.entry("X-One", "value-1"),
+                    Map.entry("X-Invalid", 1)
+                )
+            )
+        );
+
+        assertNotNull(exception.getMessage());
+        assertTrue(exception.getMessage().contains("X-Invalid"));
+        assertTrue(responseBuilder.getHeaders().isEmpty());
+    }
 }

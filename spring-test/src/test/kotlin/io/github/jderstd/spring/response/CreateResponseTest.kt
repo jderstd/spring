@@ -103,4 +103,23 @@ class CreateResponseTest {
         assertTrue(exception.message!!.contains("X-Nullable"))
         assertTrue(responseBuilder.headers.isEmpty)
     }
+
+    @Test
+    fun `addHeaders does not keep earlier headers when a later value is invalid`() {
+        val responseBuilder: CreateResponse<String> = CreateResponse()
+
+        val exception: IllegalArgumentException =
+            assertFailsWith<IllegalArgumentException> {
+                responseBuilder.addHeaders(
+                    linkedMapOf<String, Any>(
+                        "X-One" to "value-1",
+                        "X-Invalid" to 1,
+                    ),
+                )
+            }
+
+        assertNotNull(exception.message)
+        assertTrue(exception.message!!.contains("X-Invalid"))
+        assertTrue(responseBuilder.headers.isEmpty)
+    }
 }
