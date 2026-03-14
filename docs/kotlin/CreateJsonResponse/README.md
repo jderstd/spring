@@ -31,7 +31,7 @@ import org.springframework.http.ResponseEntity
 import io.github.jderstd.spring.response.json.JsonResponse
 import io.github.jderstd.spring.response.json.CreateJsonResponse
 
-val response: ResponseEntity<JsonResponse<Unit>> = CreateJsonResponse
+val response: ResponseEntity<JsonResponse<String>> = CreateJsonResponse
     .success<String>()
     .data("Hello, World!")
     .create()
@@ -59,7 +59,7 @@ val error: JsonResponseError = JsonResponseError()
     .code("bad_request")
     .message("Invalid request.")
 
-val response: ResponseEntity<JsonResponse<String>> = CreateJsonResponse
+val response: ResponseEntity<JsonResponse<Unit>> = CreateJsonResponse
     .failure()
     .addError(error)
     .create()

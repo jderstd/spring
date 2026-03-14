@@ -31,8 +31,8 @@ import org.springframework.http.ResponseEntity;
 import io.github.jderstd.spring.response.json.JsonResponse;
 import io.github.jderstd.spring.response.json.CreateJsonResponse;
 
-ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse
-    .success()
+ResponseEntity<JsonResponse<String>> response = CreateJsonResponse
+    .<String>success()
     .setData("Hello, World!")
     .create();
 ```
