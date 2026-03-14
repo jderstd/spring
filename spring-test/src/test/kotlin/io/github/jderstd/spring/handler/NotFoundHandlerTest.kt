@@ -1,6 +1,6 @@
 @file:Suppress("RedundantExplicitType")
 
-package io.github.jderstd.spring.handlers
+package io.github.jderstd.spring.handler
 
 import io.github.jderstd.spring.response.json.JsonResponse
 import io.github.jderstd.spring.response.json.JsonResponseError

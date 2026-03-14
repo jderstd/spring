@@ -1,4 +1,4 @@
-package io.github.jderstd.spring.handlers;
+package io.github.jderstd.spring.handler;
 
 import java.util.List;
 
