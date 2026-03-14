@@ -2,7 +2,7 @@
 
 # `CreateJsonResponse`
 
-This is a class to create a success JSON response.
+This is a class to create a JSON response.
 
 ```kotlin
 import org.springframework.http.ResponseEntity

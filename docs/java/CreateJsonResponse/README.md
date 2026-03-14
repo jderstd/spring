@@ -2,7 +2,7 @@
 
 # `CreateJsonResponse`
 
-This is a class to create a success JSON response.
+This is a class to create a JSON response.
 
 ```java
 import org.springframework.http.ResponseEntity;
@@ -59,7 +59,7 @@ JsonResponseError error = new JsonResponseError()
     .setCode("bad_request")
     .setMessage("Invalid request.");
 
-ResponseEntity<JsonResponse<String>> response = CreateJsonResponse
+ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse
     .failure()
     .addError(error)
     .create();
