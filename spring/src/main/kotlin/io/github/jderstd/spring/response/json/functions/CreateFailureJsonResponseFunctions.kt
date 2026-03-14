@@ -12,6 +12,19 @@ public open class CreateFailureJsonResponseFunctions<Data : Any> :
         this.json.success = false
     }
 
+    @set:JvmSynthetic
+    public var errors: List<JsonResponseError>
+        get() = this.json.errors
+        set(errors) {
+            this.json.errors = errors.toMutableList()
+        }
+
+    @JvmName("setErrors")
+    public fun errors(errors: List<JsonResponseError>): CreateFailureJsonResponseFunctions<Data> {
+        this.json.errors = errors.toMutableList()
+        return self()
+    }
+
     /**
      * Add an error to the response.
      */

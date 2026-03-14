@@ -54,6 +54,24 @@ class CreateJsonResponseTest {
     }
 
     @Test
+    fun `success builder data property updates the response body`() {
+        val response: ResponseEntity<JsonResponse<String>> =
+            CreateJsonResponse
+                .success<String>()
+                .status(202)
+                .data("done")
+                .create()
+
+        val body: JsonResponse<String> = assertNotNull(response.body)
+
+        assertEquals(202, response.statusCode.value())
+        assertEquals(listOf("application/json"), response.headers["Content-Type"])
+        assertTrue(body.success)
+        assertEquals("done", body.data)
+        assertTrue(body.errors.isEmpty())
+    }
+
+    @Test
     fun `failure creates an unsuccessful json response with errors`() {
         val error: JsonResponseError =
             JsonResponseError()
@@ -115,6 +133,31 @@ class CreateJsonResponseTest {
 
         assertEquals(listOf(emailError, nameError), body.errors)
         assertEquals(emailError, body.error())
+    }
+
+    @Test
+    fun `failure builder errors property updates the response body`() {
+        val error: JsonResponseError =
+            JsonResponseError()
+                .code("bad_request")
+                .path(listOf("email"))
+                .message("Email is invalid.")
+
+        val response: ResponseEntity<JsonResponse<Unit>> =
+            CreateJsonResponse
+                .failure()
+                .status(422)
+                .errors(listOf(error))
+                .create()
+
+        val body: JsonResponse<Unit> = assertNotNull(response.body)
+
+        assertEquals(422, response.statusCode.value())
+        assertEquals(listOf("application/json"), response.headers["Content-Type"])
+        assertFalse(body.success)
+        assertNull(body.data)
+        assertEquals(listOf(error), body.errors)
+        assertEquals(error, body.error())
     }
 
     @Test

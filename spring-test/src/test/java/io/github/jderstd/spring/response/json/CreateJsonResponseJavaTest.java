@@ -58,6 +58,23 @@ class CreateJsonResponseJavaTest {
     }
 
     @Test
+    void successSetDataWritesTheResponseBody() {
+        ResponseEntity<JsonResponse<String>> response = CreateJsonResponse.<String>success()
+                .setStatus(202)
+                .setData("done")
+                .create();
+
+        JsonResponse<String> body = response.getBody();
+
+        assertNotNull(body);
+        assertEquals(202, response.getStatusCode().value());
+        assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
+        assertTrue(body.getSuccess());
+        assertEquals("done", body.getData());
+        assertTrue(body.getErrors().isEmpty());
+    }
+
+    @Test
     void failureCreatesAnUnsuccessfulJsonResponseWithErrors() {
         JsonResponseError error = createError("bad_request", List.of("email"), "Email is invalid.");
 
@@ -109,6 +126,26 @@ class CreateJsonResponseJavaTest {
         assertNotNull(body);
         assertEquals(List.of(emailError, nameError), body.getErrors());
         assertEquals(emailError, body.error());
+    }
+
+    @Test
+    void failureSetErrorsWritesTheResponseBody() {
+        JsonResponseError error = createError("bad_request", List.of("email"), "Email is invalid.");
+
+        ResponseEntity<JsonResponse<Void>> response = CreateJsonResponse.failure()
+                .setStatus(422)
+                .setErrors(List.of(error))
+                .create();
+
+        JsonResponse<Void> body = response.getBody();
+
+        assertNotNull(body);
+        assertEquals(422, response.getStatusCode().value());
+        assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
+        assertFalse(body.getSuccess());
+        assertNull(body.getData());
+        assertEquals(List.of(error), body.getErrors());
+        assertEquals(error, body.error());
     }
 
     @Test
