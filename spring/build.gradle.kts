@@ -14,8 +14,7 @@ val springFrameworkVersion: String =
         .get()
 
 dependencies {
-    compileOnly("org.springframework:spring-web:$springFrameworkVersion")
-    compileOnly("org.springframework:spring-context:$springFrameworkVersion")
+    api("org.springframework:spring-web:$springFrameworkVersion")
 }
 
 publishing {
