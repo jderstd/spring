@@ -23,15 +23,15 @@ typos:
 ktlint:
     ktlint
 
-# Check code with ktlint
-ktlint-fmt:
+# Format code with ktlint
+fmt:
     ktlint --format
 
 # Check code
 check:
     just lslint
     just typos
-    just ktlint-fmt
+    just fmt
 
 # Build packages
 build:
