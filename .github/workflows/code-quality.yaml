@@ -25,14 +25,17 @@ jobs:
             - name: Install ls-lint
               run: brew install ls-lint
 
-            - name: Install typos-cli
-              run: brew install typos-cli
-
             - name: Run lslint
               run: just lslint
 
+            - name: Install typos-cli
+              run: brew install typos-cli
+
             - name: Run typos CLI
               run: just typos
+
+            - name: Install ktlint
+              run: brew install ktlint
 
             - name: Run ktlint
               run: just ktlint
