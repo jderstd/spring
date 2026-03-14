@@ -13,13 +13,13 @@ public open class CreateBaseJsonResponseFunctions<Data : Any, Self : CreateBaseJ
      * JSON body.
      */
     @set:JvmSynthetic
-    public var json: JsonResponse<Data> = JsonResponse()
+    protected var json: JsonResponse<Data> = JsonResponse()
 
     /**
      * Set JSON body.
      */
     @JvmName("setJson")
-    public fun json(json: JsonResponse<Data>): Self {
+    protected fun json(json: JsonResponse<Data>): Self {
         this.json = json
         return self()
     }
