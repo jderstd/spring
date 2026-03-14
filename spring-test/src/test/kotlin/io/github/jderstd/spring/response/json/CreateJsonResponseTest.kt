@@ -41,7 +41,7 @@ class CreateJsonResponseTest {
             CreateJsonResponse
                 .success<String>()
                 .status(202)
-                .json(JsonResponse<String>().data("done"))
+                .data("done")
                 .create()
 
         val body: JsonResponse<String> = assertNotNull(response.body)
@@ -161,7 +161,7 @@ class CreateJsonResponseTest {
     }
 
     @Test
-    fun `failure json setter keeps fluent chaining on the failure builder`() {
+    fun `failure builder keeps fluent chaining after addError`() {
         val error: JsonResponseError =
             JsonResponseError()
                 .code("bad_request")
