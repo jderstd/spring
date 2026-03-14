@@ -19,11 +19,15 @@ lslint:
 typos:
     typos
 
+# Lint code with ktlint
+ktlint:
+    ktlint --format
+
 # Check code
 check:
     just lslint
     just typos
-    ktlint --format
+    just ktlint
 
 # Build packages
 build:

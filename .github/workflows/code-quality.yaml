@@ -1,0 +1,38 @@
+name: Code Quality
+
+on:
+    pull_request:
+    push:
+
+jobs:
+    check:
+        name: Check
+        runs-on: macos-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install just
+              uses: extractions/setup-just@v3
+
+            - name: Setup JDK
+              uses: actions/setup-java@v5
+              with:
+                  distribution: temurin
+                  java-version: 25
+
+            - name: Install ls-lint
+              run: brew install ls-lint
+
+            - name: Install typos-cli
+              run: brew install typos-cli
+
+            - name: Run lslint
+              run: just lslint
+
+            - name: Run typos CLI
+              run: just typos
+
+            - name: Run ktlint
+              run: just ktlint

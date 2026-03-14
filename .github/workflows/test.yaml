@@ -1,0 +1,48 @@
+name: Test
+
+on:
+    pull_request:
+        branches:
+            - main
+    push:
+        branches:
+            - main
+
+jobs:
+    test:
+        name: ${{ matrix.os.name }} / JDK ${{ matrix.java }}
+        runs-on: ${{ matrix.os.code }}
+
+        strategy:
+            fail-fast: false
+            matrix:
+                os:
+                    - name: Linux
+                      code: ubuntu-latest
+                    - name: macOS
+                      code: macos-latest
+                    - name: Windows
+                      code: windows-latest
+                java:
+                    - 17
+                    - 21
+                    - 25
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install just
+              uses: extractions/setup-just@v3
+
+            - name: Setup JDK
+              uses: actions/setup-java@v5
+              with:
+                  distribution: temurin
+                  java-version: ${{ matrix.java }}
+
+            - name: Build
+              run: just build
+
+            - name: Test
+              run: just test
