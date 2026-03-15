@@ -79,10 +79,16 @@ Always prefer `just` commands.
 
 ## Commands
 
-Lint and format:
+Format:
 
 ```sh
-just check
+just fmt
+```
+
+Lint:
+
+```shell
+just lint
 ```
 
 Build:
