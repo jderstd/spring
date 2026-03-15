@@ -86,7 +86,7 @@ class CreateJsonResponseJavaTest {
 
         assertNotNull(body);
 
-        JsonResponseError firstError = body.error();
+        JsonResponseError firstError = body.getError();
 
         assertEquals(400, response.getStatusCode().value());
         assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
@@ -107,7 +107,7 @@ class CreateJsonResponseJavaTest {
         assertNotNull(body);
         assertFalse(body.getSuccess());
         assertTrue(body.getErrors().isEmpty());
-        assertNull(body.error());
+        assertNull(body.getError());
     }
 
     @Test
@@ -125,7 +125,7 @@ class CreateJsonResponseJavaTest {
 
         assertNotNull(body);
         assertEquals(List.of(emailError, nameError), body.getErrors());
-        assertEquals(emailError, body.error());
+        assertEquals(emailError, body.getError());
     }
 
     @Test
@@ -145,7 +145,7 @@ class CreateJsonResponseJavaTest {
         assertFalse(body.getSuccess());
         assertNull(body.getData());
         assertEquals(List.of(error), body.getErrors());
-        assertEquals(error, body.error());
+        assertEquals(error, body.getError());
     }
 
     @Test
@@ -164,7 +164,7 @@ class CreateJsonResponseJavaTest {
         assertNotNull(body);
         assertEquals(400, response.getStatusCode().value());
         assertFalse(body.getSuccess());
-        assertEquals(error, body.error());
+        assertEquals(error, body.getError());
     }
 
     @Test

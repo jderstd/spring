@@ -41,6 +41,12 @@ public open class JsonResponse<Data : Any> {
     }
 
     /**
+     * Get the first error for the response when `success` is `false`.
+     */
+    @JvmName("getError")
+    public fun error(): JsonResponseError? = this.errors.firstOrNull()
+
+    /**
      * Set errors for the response.
      */
     @JvmName("setErrors")
@@ -48,11 +54,6 @@ public open class JsonResponse<Data : Any> {
         this.errors = errors
         return this
     }
-
-    /**
-     * Get the first error for the response when `success` is `false`.
-     */
-    public fun error(): JsonResponseError? = this.errors.firstOrNull()
 
     /**
      * Add an error to the response.

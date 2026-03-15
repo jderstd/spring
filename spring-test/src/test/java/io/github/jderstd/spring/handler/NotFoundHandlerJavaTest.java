@@ -27,7 +27,8 @@ class NotFoundHandlerJavaTest {
         JsonResponse<Void> body = response.getBody();
 
         assertNotNull(body);
-        JsonResponseError error = body.error();
+
+        JsonResponseError error = body.getError();
 
         ResponseError targetError = ResponseError.NOT_FOUND;
 

@@ -20,7 +20,7 @@ class JsonResponseJavaTest {
         response.addError(error);
 
         assertEquals(List.of(error), response.getErrors());
-        assertEquals(error, response.error());
+        assertEquals(error, response.getError());
     }
 
     @Test
@@ -34,7 +34,7 @@ class JsonResponseJavaTest {
         response.addErrors(List.of(firstError, secondError));
 
         assertEquals(List.of(firstError, secondError), response.getErrors());
-        assertEquals(firstError, response.error());
+        assertEquals(firstError, response.getError());
     }
 
     @Test
