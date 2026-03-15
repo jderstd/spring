@@ -1,5 +1,7 @@
 package io.github.jderstd.spring.response.json
 
+import io.github.jderstd.spring.response.json.functions.CreateFailureJsonResponseFunctions
+import io.github.jderstd.spring.response.json.functions.CreateSuccessJsonResponseFunctions
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import kotlin.test.Test
@@ -70,6 +72,25 @@ class CreateJsonResponseTest {
         assertTrue(body.success)
         assertEquals("done", body.data)
         assertTrue(body.errors.isEmpty())
+    }
+
+    @Test
+    fun `success builder reuse does not mutate earlier responses`() {
+        val builder: CreateSuccessJsonResponseFunctions<String> =
+            CreateJsonResponse
+                .success<String>()
+                .data("first")
+
+        val firstResponse: ResponseEntity<JsonResponse<String>> = builder.create()
+
+        builder.data("second")
+
+        val secondResponse: ResponseEntity<JsonResponse<String>> = builder.create()
+        val firstBody: JsonResponse<String> = assertNotNull(firstResponse.body)
+        val secondBody: JsonResponse<String> = assertNotNull(secondResponse.body)
+
+        assertEquals("first", firstBody.data)
+        assertEquals("second", secondBody.data)
     }
 
     @Test
@@ -181,6 +202,35 @@ class CreateJsonResponseTest {
         assertEquals(400, response.statusCode.value())
         assertFalse(body.success)
         assertEquals(error, body.error())
+    }
+
+    @Test
+    fun `failure builder reuse does not mutate earlier responses`() {
+        val firstError: JsonResponseError =
+            JsonResponseError()
+                .code("bad_request")
+                .message("Email is invalid.")
+
+        val secondError: JsonResponseError =
+            JsonResponseError()
+                .code("missing_name")
+                .message("Name is required.")
+
+        val builder: CreateFailureJsonResponseFunctions<Unit> =
+            CreateJsonResponse
+                .failure()
+                .addError(firstError)
+
+        val firstResponse: ResponseEntity<JsonResponse<Unit>> = builder.create()
+
+        builder.addError(secondError)
+
+        val secondResponse: ResponseEntity<JsonResponse<Unit>> = builder.create()
+        val firstBody: JsonResponse<Unit> = assertNotNull(firstResponse.body)
+        val secondBody: JsonResponse<Unit> = assertNotNull(secondResponse.body)
+
+        assertEquals(listOf(firstError), firstBody.errors)
+        assertEquals(listOf(firstError, secondError), secondBody.errors)
     }
 
     @Test

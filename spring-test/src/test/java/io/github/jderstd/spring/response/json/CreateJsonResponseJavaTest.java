@@ -2,6 +2,8 @@ package io.github.jderstd.spring.response.json;
 
 import java.util.List;
 
+import io.github.jderstd.spring.response.json.functions.CreateFailureJsonResponseFunctions;
+import io.github.jderstd.spring.response.json.functions.CreateSuccessJsonResponseFunctions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +75,25 @@ class CreateJsonResponseJavaTest {
         assertTrue(body.getSuccess());
         assertEquals("done", body.getData());
         assertTrue(body.getErrors().isEmpty());
+    }
+
+    @Test
+    void successBuilderReuseDoesNotMutateEarlierResponses() {
+        CreateSuccessJsonResponseFunctions<String> builder = CreateJsonResponse.<String>success()
+            .setData("first");
+
+        ResponseEntity<JsonResponse<String>> firstResponse = builder.create();
+
+        builder.setData("second");
+
+        ResponseEntity<JsonResponse<String>> secondResponse = builder.create();
+        JsonResponse<String> firstBody = firstResponse.getBody();
+        JsonResponse<String> secondBody = secondResponse.getBody();
+
+        assertNotNull(firstBody);
+        assertNotNull(secondBody);
+        assertEquals("first", firstBody.getData());
+        assertEquals("second", secondBody.getData());
     }
 
     @Test
@@ -166,6 +187,33 @@ class CreateJsonResponseJavaTest {
         assertEquals(400, response.getStatusCode().value());
         assertFalse(body.getSuccess());
         assertEquals(error, body.getError());
+    }
+
+    @Test
+    void failureBuilderReuseDoesNotMutateEarlierResponses() {
+        JsonResponseError firstError = new JsonResponseError()
+            .setCode("bad_request")
+            .setMessage("Email is invalid.");
+
+        JsonResponseError secondError = new JsonResponseError()
+            .setCode("missing_name")
+            .setMessage("Name is required.");
+
+        CreateFailureJsonResponseFunctions<Void> builder = CreateJsonResponse.failure()
+            .addError(firstError);
+
+        ResponseEntity<JsonResponse<Void>> firstResponse = builder.create();
+
+        builder.addError(secondError);
+
+        ResponseEntity<JsonResponse<Void>> secondResponse = builder.create();
+        JsonResponse<Void> firstBody = firstResponse.getBody();
+        JsonResponse<Void> secondBody = secondResponse.getBody();
+
+        assertNotNull(firstBody);
+        assertNotNull(secondBody);
+        assertEquals(List.of(firstError), firstBody.getErrors());
+        assertEquals(List.of(firstError, secondError), secondBody.getErrors());
     }
 
     @Test

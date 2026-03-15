@@ -24,6 +24,12 @@ public open class CreateBaseJsonResponseFunctions<Data : Any, Self : CreateBaseJ
         return self()
     }
 
+    private fun snapshotJsonResponse(source: JsonResponse<Data>): JsonResponse<Data> =
+        JsonResponse<Data>()
+            .success(source.success)
+            .data(source.data)
+            .errors(source.errors.toList())
+
     /**
      * Finish the response creation.
      */
@@ -33,6 +39,6 @@ public open class CreateBaseJsonResponseFunctions<Data : Any, Self : CreateBaseJ
         return ResponseEntity
             .status(this.status)
             .headers(this.headers)
-            .body(this.json)
+            .body(snapshotJsonResponse(this.json))
     }
 }
