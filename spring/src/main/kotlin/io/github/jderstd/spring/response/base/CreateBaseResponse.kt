@@ -17,6 +17,9 @@ public open class CreateBaseResponseFunctions<Self : CreateBaseResponseFunctions
      */
     @set:JvmSynthetic
     public var headers: HttpHeaders = HttpHeaders()
+        set(httpHeaders) {
+            field = HttpHeaders.copyOf(httpHeaders)
+        }
 
     @Suppress("UNCHECKED_CAST")
     protected fun self(): Self = this as Self

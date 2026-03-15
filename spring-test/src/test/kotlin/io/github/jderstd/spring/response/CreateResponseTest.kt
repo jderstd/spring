@@ -1,5 +1,6 @@
 package io.github.jderstd.spring.response
 
+import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -57,6 +58,24 @@ class CreateResponseTest {
         responseBuilder.addHeader("X-Trace", listOf("trace-2", "trace-3"))
 
         assertEquals(listOf("trace-1", "trace-2", "trace-3"), responseBuilder.headers["X-Trace"])
+    }
+
+    @Test
+    fun `headers copies the provided headers`() {
+        val originalHeaders: HttpHeaders = HttpHeaders()
+
+        originalHeaders.add("X-Request-Id", "req-123")
+
+        val responseBuilder: CreateResponse<String> = CreateResponse<String>().headers(originalHeaders)
+
+        originalHeaders.add("X-Late", "late")
+        responseBuilder.addHeader("X-Trace", "trace-1")
+
+        assertEquals(listOf("req-123"), responseBuilder.headers["X-Request-Id"])
+        assertNull(responseBuilder.headers["X-Late"])
+        assertEquals(listOf("req-123"), originalHeaders["X-Request-Id"])
+        assertEquals(listOf("late"), originalHeaders["X-Late"])
+        assertNull(originalHeaders["X-Trace"])
     }
 
     @Test

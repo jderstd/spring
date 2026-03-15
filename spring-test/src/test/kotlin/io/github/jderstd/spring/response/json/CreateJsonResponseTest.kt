@@ -1,5 +1,6 @@
 package io.github.jderstd.spring.response.json
 
+import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -204,5 +205,26 @@ class CreateJsonResponseTest {
 
         assertEquals(listOf("req-123"), response.headers["X-Request-Id"])
         assertEquals(listOf("application/json"), response.headers["Content-Type"])
+    }
+
+    @Test
+    fun `json create copies read only headers before enforcing content type`() {
+        val sourceHeaders: HttpHeaders = HttpHeaders()
+
+        sourceHeaders.add("X-Request-Id", "req-123")
+
+        val builder =
+            CreateJsonResponse
+                .success<String>()
+                .headers(HttpHeaders.readOnlyHttpHeaders(sourceHeaders))
+
+        sourceHeaders.add("X-Late", "late")
+
+        val response: ResponseEntity<JsonResponse<String>> = builder.create()
+
+        assertEquals(listOf("req-123"), response.headers["X-Request-Id"])
+        assertNull(response.headers["X-Late"])
+        assertEquals(listOf("application/json"), response.headers["Content-Type"])
+        assertNull(sourceHeaders["Content-Type"])
     }
 }

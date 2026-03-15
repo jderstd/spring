@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,6 +63,25 @@ class CreateResponseJavaTest {
         responseBuilder.addHeader("X-Trace", List.of("trace-2", "trace-3"));
 
         assertEquals(List.of("trace-1", "trace-2", "trace-3"), responseBuilder.getHeaders().get("X-Trace"));
+    }
+
+    @Test
+    void setHeadersCopiesTheProvidedHeaders() {
+        HttpHeaders originalHeaders = new HttpHeaders();
+
+        originalHeaders.add("X-Request-Id", "req-123");
+
+        CreateResponse<String> responseBuilder = new CreateResponse<String>()
+            .setHeaders(originalHeaders);
+
+        originalHeaders.add("X-Late", "late");
+        responseBuilder.addHeader("X-Trace", "trace-1");
+
+        assertEquals(List.of("req-123"), responseBuilder.getHeaders().get("X-Request-Id"));
+        assertNull(responseBuilder.getHeaders().get("X-Late"));
+        assertEquals(List.of("req-123"), originalHeaders.get("X-Request-Id"));
+        assertEquals(List.of("late"), originalHeaders.get("X-Late"));
+        assertNull(originalHeaders.get("X-Trace"));
     }
 
     @Test

@@ -3,6 +3,7 @@ package io.github.jderstd.spring.response.json;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -187,6 +188,26 @@ class CreateJsonResponseJavaTest {
 
         assertEquals(List.of("req-123"), response.getHeaders().get("X-Request-Id"));
         assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
+    }
+
+    @Test
+    void jsonCreateCopiesReadOnlyHeadersBeforeEnforcingContentType() {
+        HttpHeaders sourceHeaders = new HttpHeaders();
+
+        sourceHeaders.add("X-Request-Id", "req-123");
+
+        var builder = CreateJsonResponse
+                .<String>success()
+                .setHeaders(HttpHeaders.readOnlyHttpHeaders(sourceHeaders));
+
+        sourceHeaders.add("X-Late", "late");
+
+        ResponseEntity<JsonResponse<String>> response = builder.create();
+
+        assertEquals(List.of("req-123"), response.getHeaders().get("X-Request-Id"));
+        assertNull(response.getHeaders().get("X-Late"));
+        assertEquals(List.of("application/json"), response.getHeaders().get("Content-Type"));
+        assertNull(sourceHeaders.get("Content-Type"));
     }
 
     private JsonResponseError createError(String code, List<String> path, String message) {
