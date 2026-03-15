@@ -60,6 +60,20 @@ class JsonResponseJavaTest {
     }
 
     @Test
+    void jsonResponseSetErrorsCopiesTheProvidedList() {
+        JsonResponseError firstError = createError("first");
+        ArrayList<JsonResponseError> providedErrors = new ArrayList<>(List.of(firstError));
+
+        JsonResponse<String> response = new JsonResponse<String>()
+            .setErrors(providedErrors);
+
+        providedErrors.add(createError("second"));
+
+        assertEquals(List.of(firstError), response.getErrors());
+        assertEquals(firstError, response.getError());
+    }
+
+    @Test
     void jsonResponseErrorDefaultsStayPredictable() {
         JsonResponseError error = new JsonResponseError();
 

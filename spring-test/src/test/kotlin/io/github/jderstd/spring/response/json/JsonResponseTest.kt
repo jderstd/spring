@@ -52,7 +52,7 @@ class JsonResponseTest {
             JsonResponse<String>()
                 .success(false)
                 .data("payload")
-                .errors(mutableListOf(firstError))
+                .errors(listOf(firstError))
                 .addError(secondError)
 
         assertFalse(response.success)
@@ -60,6 +60,20 @@ class JsonResponseTest {
         assertEquals(listOf("email"), firstError.path)
         assertEquals("Email is invalid.", firstError.message)
         assertEquals(listOf(firstError, secondError), response.errors)
+    }
+
+    @Test
+    fun `json response errors setter copies the provided list`() {
+        val firstError: JsonResponseError = JsonResponseError().code("first")
+
+        val providedErrors: MutableList<JsonResponseError> = mutableListOf(firstError)
+
+        val response: JsonResponse<String> = JsonResponse<String>().errors(providedErrors)
+
+        providedErrors.add(JsonResponseError().code("second"))
+
+        assertEquals(listOf(firstError), response.errors)
+        assertEquals(firstError, response.error())
     }
 
     @Test

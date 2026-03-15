@@ -21,6 +21,9 @@ public open class JsonResponse<Data : Any> {
      */
     @set:JvmSynthetic
     public var errors: MutableList<JsonResponseError> = mutableListOf<JsonResponseError>()
+        set(errors) {
+            field = errors.toMutableList()
+        }
 
     /**
      * Set whether the response is successful or not.
@@ -50,8 +53,8 @@ public open class JsonResponse<Data : Any> {
      * Set errors for the response.
      */
     @JvmName("setErrors")
-    public fun errors(errors: MutableList<JsonResponseError>): JsonResponse<Data> {
-        this.errors = errors
+    public fun errors(errors: List<JsonResponseError>): JsonResponse<Data> {
+        this.errors = errors.toMutableList()
         return this
     }
 
