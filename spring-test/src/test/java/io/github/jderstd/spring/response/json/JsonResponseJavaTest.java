@@ -82,6 +82,18 @@ class JsonResponseJavaTest {
         assertNull(error.getMessage());
     }
 
+    @Test
+    void jsonResponseErrorSetPathCopiesTheProvidedList() {
+        ArrayList<String> providedPath = new ArrayList<>(List.of("email"));
+
+        JsonResponseError error = new JsonResponseError()
+            .setPath(providedPath);
+
+        providedPath.add("late");
+
+        assertEquals(List.of("email"), error.getPath());
+    }
+
     private JsonResponseError createError(String code) {
         JsonResponseError error = new JsonResponseError();
         error.setCode(code);

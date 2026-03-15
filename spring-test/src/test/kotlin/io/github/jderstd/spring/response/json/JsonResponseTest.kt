@@ -84,4 +84,15 @@ class JsonResponseTest {
         assertTrue(error.path.isEmpty())
         assertNull(error.message)
     }
+
+    @Test
+    fun `json response error path setter copies the provided list`() {
+        val providedPath: MutableList<String> = mutableListOf("email")
+
+        val error: JsonResponseError = JsonResponseError().path(providedPath)
+
+        providedPath.add("late")
+
+        assertEquals(listOf("email"), error.path)
+    }
 }

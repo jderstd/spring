@@ -15,6 +15,9 @@ public open class JsonResponseError {
      */
     @set:JvmSynthetic
     public var path: List<String> = listOf<String>()
+        set(path) {
+            field = path.toList()
+        }
 
     /**
      * Detail of the error.
