@@ -12,7 +12,7 @@ public class CreateJsonResponse {
          * Create a success JSON response without any data.
          */
         @JvmSynthetic
-        @JvmName("datalessUnit")
+        @JvmName("_dataless")
         public fun dataless(): CreateSuccessJsonResponseFunctions<Unit> = CreateSuccessJsonResponseFunctions()
 
         /**
@@ -34,7 +34,7 @@ public class CreateJsonResponse {
          * Create a failure JSON response.
          */
         @JvmSynthetic
-        @JvmName("failureUnit")
+        @JvmName("_failure")
         public fun failure(): CreateFailureJsonResponseFunctions<Unit> = CreateFailureJsonResponseFunctions()
 
         /**
