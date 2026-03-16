@@ -1,6 +1,8 @@
 plugins {
-    `java-library`
+    // Kotlin JVM
     kotlin("jvm")
+    // Java API
+    `java-library`
 }
 
 val springFrameworkVersion: String =

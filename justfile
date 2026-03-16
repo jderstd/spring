@@ -41,13 +41,13 @@ build:
 test:
     gradle :spring-test:test
 
-# Publish packages
-publish:
-    gradle :spring:publishToMavenLocal
-
 # Publish packages as dry-run
 publish-try:
-    gradle :spring:publishToMavenLocal --dry-run
+    gradle :spring:publishToMavenCentral --dry-run
+
+# Publish packages
+publish:
+    gradle :spring:publishToMavenCentral
 
 # Clean
 clean:
@@ -57,8 +57,10 @@ clean:
 clean-all-linux:
     just clean
 
-    rm -rf ./.kotlin
     rm -rf ./.gradle
+    rm -rf ./.kotlin
+    rm -rf ./gradle
+    rm -rf ./.idea
 
 # Clean everything (macOS)
 clean-all-macos:
@@ -68,8 +70,10 @@ clean-all-macos:
 clean-all-windows:
     just clean
 
-    Remove-Item -Recurse -Force ./.kotlin
     Remove-Item -Recurse -Force ./.gradle
+    Remove-Item -Recurse -Force ./.kotlin
+    Remove-Item -Recurse -Force ./gradle
+    Remove-Item -Recurse -Force ./.idea
 
 # Clean everything
 clean-all:

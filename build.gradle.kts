@@ -6,6 +6,13 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 group = "io.github.jderstd"
 
+plugins {
+    // Kotlin JVM
+    id("org.jetbrains.kotlin.jvm") version "2.3.10" apply false
+    // Maven publication
+    id("com.vanniktech.maven.publish") version "0.36.0" apply false
+}
+
 data class JavaToolchain(
     val version: Int,
     val javaVersion: JavaVersion,
@@ -38,32 +45,20 @@ fun resolveJavaToolchain(version: Int): JavaToolchain =
 val javaToolchain: JavaToolchain = resolveJavaToolchain(17)
 val kotlinVersion: KotlinVersion = KotlinVersion.KOTLIN_2_3
 
-plugins {
-    kotlin("jvm") version "2.3.10" apply false
-}
-
 subprojects {
     group = rootProject.group
 
+    // Sources
     repositories {
         mavenCentral()
     }
 
+    // Test Platform
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()
     }
 
-    pluginManager.withPlugin("java-library") {
-        extensions.configure<JavaPluginExtension> {
-            toolchain {
-                languageVersion = JavaLanguageVersion.of(javaToolchain.version)
-            }
-
-            sourceCompatibility = javaToolchain.javaVersion
-            targetCompatibility = javaToolchain.javaVersion
-        }
-    }
-
+    // Kotlin JVM
     pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
         extensions.configure<KotlinJvmProjectExtension> {
             explicitApi()
@@ -74,6 +69,18 @@ subprojects {
                 apiVersion = kotlinVersion
                 languageVersion = kotlinVersion
             }
+        }
+    }
+
+    // Java API
+    pluginManager.withPlugin("java-library") {
+        extensions.configure<JavaPluginExtension> {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(javaToolchain.version)
+            }
+
+            sourceCompatibility = javaToolchain.javaVersion
+            targetCompatibility = javaToolchain.javaVersion
         }
     }
 }
