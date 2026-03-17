@@ -1,7 +1,7 @@
 package io.github.jderstd.spring.response.json
 
-import io.github.jderstd.spring.response.json.functions.CreateFailureJsonResponseFunctions
-import io.github.jderstd.spring.response.json.functions.CreateSuccessJsonResponseFunctions
+import io.github.jderstd.spring.response.json.create.CreateFailureJsonResponse
+import io.github.jderstd.spring.response.json.create.CreateSuccessJsonResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import kotlin.test.Test
@@ -76,7 +76,7 @@ class CreateJsonResponseTest {
 
     @Test
     fun `success builder reuse does not mutate earlier responses`() {
-        val builder: CreateSuccessJsonResponseFunctions<String> =
+        val builder: CreateSuccessJsonResponse<String> =
             CreateJsonResponse
                 .success<String>()
                 .data("first")
@@ -216,7 +216,7 @@ class CreateJsonResponseTest {
                 .code("missing_name")
                 .message("Name is required.")
 
-        val builder: CreateFailureJsonResponseFunctions<Unit> =
+        val builder: CreateFailureJsonResponse<Unit> =
             CreateJsonResponse
                 .failure()
                 .addError(firstError)

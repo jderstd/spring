@@ -1,12 +1,11 @@
-package io.github.jderstd.spring.response.json.functions
+package io.github.jderstd.spring.response.json.create
 
 import io.github.jderstd.spring.response.json.JsonResponseError
 
 /**
  * Create a failure JSON response.
  */
-public open class CreateFailureJsonResponseFunctions<Data : Any> :
-    CreateBaseJsonResponseFunctions<Data, CreateFailureJsonResponseFunctions<Data>>() {
+public open class CreateFailureJsonResponse<Data : Any> : CreateBaseJsonResponse<Data, CreateFailureJsonResponse<Data>>() {
     init {
         this.status = 400
         this.json.success = false
@@ -20,7 +19,7 @@ public open class CreateFailureJsonResponseFunctions<Data : Any> :
         }
 
     @JvmName("setErrors")
-    public fun errors(errors: List<JsonResponseError>): CreateFailureJsonResponseFunctions<Data> {
+    public fun errors(errors: List<JsonResponseError>): CreateFailureJsonResponse<Data> {
         this.json.errors = errors.toMutableList()
         return self()
     }
@@ -28,7 +27,7 @@ public open class CreateFailureJsonResponseFunctions<Data : Any> :
     /**
      * Add an error to the response.
      */
-    public fun addError(error: JsonResponseError): CreateFailureJsonResponseFunctions<Data> {
+    public fun addError(error: JsonResponseError): CreateFailureJsonResponse<Data> {
         this.json.errors.add(error)
         return self()
     }
@@ -36,7 +35,7 @@ public open class CreateFailureJsonResponseFunctions<Data : Any> :
     /**
      * Add a list of errors to the response.
      */
-    public fun addErrors(errors: Iterable<JsonResponseError>): CreateFailureJsonResponseFunctions<Data> {
+    public fun addErrors(errors: Iterable<JsonResponseError>): CreateFailureJsonResponse<Data> {
         this.json.errors.addAll(errors)
         return self()
     }

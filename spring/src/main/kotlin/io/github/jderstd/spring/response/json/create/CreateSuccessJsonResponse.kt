@@ -1,10 +1,9 @@
-package io.github.jderstd.spring.response.json.functions
+package io.github.jderstd.spring.response.json.create
 
 /**
  * Create a success JSON response.
  */
-public open class CreateSuccessJsonResponseFunctions<Data : Any> :
-    CreateBaseJsonResponseFunctions<Data, CreateSuccessJsonResponseFunctions<Data>>() {
+public open class CreateSuccessJsonResponse<Data : Any> : CreateBaseJsonResponse<Data, CreateSuccessJsonResponse<Data>>() {
     init {
         this.status = 200
         this.json.success = true
@@ -18,7 +17,7 @@ public open class CreateSuccessJsonResponseFunctions<Data : Any> :
         }
 
     @JvmName("setData")
-    public fun data(data: Data): CreateSuccessJsonResponseFunctions<Data> {
+    public fun data(data: Data): CreateSuccessJsonResponse<Data> {
         this.json.data = data
         return self()
     }

@@ -1,4 +1,4 @@
-package io.github.jderstd.spring.response.json.functions
+package io.github.jderstd.spring.response.json.create
 
 import io.github.jderstd.spring.response.base.CreateBaseResponseFunctions
 import io.github.jderstd.spring.response.json.JsonResponse
@@ -7,8 +7,7 @@ import org.springframework.http.ResponseEntity
 /**
  * Create a base JSON response.
  */
-public open class CreateBaseJsonResponseFunctions<Data : Any, Self : CreateBaseJsonResponseFunctions<Data, Self>> :
-    CreateBaseResponseFunctions<Self>() {
+public open class CreateBaseJsonResponse<Data : Any, Self : CreateBaseJsonResponse<Data, Self>> : CreateBaseResponseFunctions<Self>() {
     /**
      * JSON body.
      */

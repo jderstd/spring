@@ -4,7 +4,7 @@ import io.github.jderstd.spring.response.json.CreateJsonResponse
 import io.github.jderstd.spring.response.json.JsonResponse
 import io.github.jderstd.spring.response.json.JsonResponseError
 import io.github.jderstd.spring.response.json.ResponseError
-import io.github.jderstd.spring.response.json.functions.CreateFailureJsonResponseFunctions
+import io.github.jderstd.spring.response.json.create.CreateFailureJsonResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.ErrorResponse
@@ -25,7 +25,7 @@ public class NotFoundHandler {
         @JvmStatic
         @JvmOverloads
         public fun handle(errorResponse: ErrorResponse? = null): ResponseEntity<JsonResponse<Void>> {
-            val builder: CreateFailureJsonResponseFunctions<Void> =
+            val builder: CreateFailureJsonResponse<Void> =
                 CreateJsonResponse
                     .failure(null)
                     .status(STATUS)

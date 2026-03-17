@@ -1,7 +1,7 @@
 package io.github.jderstd.spring.response.json
 
-import io.github.jderstd.spring.response.json.functions.CreateFailureJsonResponseFunctions
-import io.github.jderstd.spring.response.json.functions.CreateSuccessJsonResponseFunctions
+import io.github.jderstd.spring.response.json.create.CreateFailureJsonResponse
+import io.github.jderstd.spring.response.json.create.CreateSuccessJsonResponse
 
 /**
  * Create a JSON response.
@@ -13,7 +13,7 @@ public class CreateJsonResponse {
          */
         @JvmSynthetic
         @JvmName("_dataless")
-        public fun dataless(): CreateSuccessJsonResponseFunctions<Unit> = CreateSuccessJsonResponseFunctions()
+        public fun dataless(): CreateSuccessJsonResponse<Unit> = CreateSuccessJsonResponse()
 
         /**
          * Create a success JSON response without any data.
@@ -22,20 +22,20 @@ public class CreateJsonResponse {
         @JvmOverloads
         public fun dataless(
             @Suppress("UNUSED_PARAMETER") unused: Void? = null,
-        ): CreateSuccessJsonResponseFunctions<Void> = CreateSuccessJsonResponseFunctions()
+        ): CreateSuccessJsonResponse<Void> = CreateSuccessJsonResponse()
 
         /**
          * Create a success JSON response.
          */
         @JvmStatic
-        public fun <T : Any> success(): CreateSuccessJsonResponseFunctions<T> = CreateSuccessJsonResponseFunctions()
+        public fun <T : Any> success(): CreateSuccessJsonResponse<T> = CreateSuccessJsonResponse()
 
         /**
          * Create a failure JSON response.
          */
         @JvmSynthetic
         @JvmName("_failure")
-        public fun failure(): CreateFailureJsonResponseFunctions<Unit> = CreateFailureJsonResponseFunctions()
+        public fun failure(): CreateFailureJsonResponse<Unit> = CreateFailureJsonResponse()
 
         /**
          * Create a failure JSON response.
@@ -44,6 +44,6 @@ public class CreateJsonResponse {
         @JvmOverloads
         public fun failure(
             @Suppress("UNUSED_PARAMETER") unused: Void? = null,
-        ): CreateFailureJsonResponseFunctions<Void> = CreateFailureJsonResponseFunctions()
+        ): CreateFailureJsonResponse<Void> = CreateFailureJsonResponse()
     }
 }

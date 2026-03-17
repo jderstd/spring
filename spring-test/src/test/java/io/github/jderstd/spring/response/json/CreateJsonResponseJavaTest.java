@@ -2,8 +2,8 @@ package io.github.jderstd.spring.response.json;
 
 import java.util.List;
 
-import io.github.jderstd.spring.response.json.functions.CreateFailureJsonResponseFunctions;
-import io.github.jderstd.spring.response.json.functions.CreateSuccessJsonResponseFunctions;
+import io.github.jderstd.spring.response.json.create.CreateFailureJsonResponse;
+import io.github.jderstd.spring.response.json.create.CreateSuccessJsonResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +79,7 @@ class CreateJsonResponseJavaTest {
 
     @Test
     void successBuilderReuseDoesNotMutateEarlierResponses() {
-        CreateSuccessJsonResponseFunctions<String> builder = CreateJsonResponse.<String>success()
+        CreateSuccessJsonResponse<String> builder = CreateJsonResponse.<String>success()
             .setData("first");
 
         ResponseEntity<JsonResponse<String>> firstResponse = builder.create();
@@ -199,7 +199,7 @@ class CreateJsonResponseJavaTest {
             .setCode("missing_name")
             .setMessage("Name is required.");
 
-        CreateFailureJsonResponseFunctions<Void> builder = CreateJsonResponse.failure()
+        CreateFailureJsonResponse<Void> builder = CreateJsonResponse.failure()
             .addError(firstError);
 
         ResponseEntity<JsonResponse<Void>> firstResponse = builder.create();
