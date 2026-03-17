@@ -9,6 +9,11 @@ This package includes different response builders based on the JSON response str
 For the documentation,
 please refer to the [documentation](./docs/README.md).
 
+## Contributing
+
+For contributing,
+please refer to the [contributing guide](./CONTRIBUTING.md).
+
 ## License
 
 This project is licensed under the terms of the MIT license.
