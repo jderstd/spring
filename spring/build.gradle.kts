@@ -7,7 +7,7 @@ plugins {
     id("com.vanniktech.maven.publish")
 }
 
-val moduleVersion: String = "0.1.0"
+val moduleVersion: String = "0.2.0"
 
 version = moduleVersion
 
