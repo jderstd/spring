@@ -5,8 +5,8 @@ on:
     push:
 
 jobs:
-    check:
-        name: Check
+    lint:
+        name: Lint
         runs-on: macos-latest
 
         steps:
@@ -20,7 +20,7 @@ jobs:
               uses: actions/setup-java@v5
               with:
                   distribution: temurin
-                  java-version: 25
+                  java-version: 17
 
             - name: Install ls-lint
               run: brew install ls-lint
