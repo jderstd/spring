@@ -10,7 +10,7 @@ on:
 
 jobs:
     test:
-        name: ${{ matrix.os.name }} / JDK ${{ matrix.java }}
+        name: ${{ matrix.os.name }}
         runs-on: ${{ matrix.os.code }}
 
         strategy:
@@ -23,11 +23,6 @@ jobs:
                       code: macos-latest
                     - name: Windows
                       code: windows-latest
-                java:
-                    - 17
-                    - 21
-                    - 25
-
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -39,7 +34,7 @@ jobs:
               uses: actions/setup-java@v5
               with:
                   distribution: temurin
-                  java-version: ${{ matrix.java }}
+                  java-version: 17
 
             - name: Build
               run: just build
